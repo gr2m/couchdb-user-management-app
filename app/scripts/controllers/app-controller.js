@@ -1,11 +1,11 @@
 /* global couchDbUserManagementApp */
-couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', 'database', function($scope, $http, database){
+couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', '$localStorage', 'database', function($scope, $http, $localStorage, database){
   'use strict';
 
-  // for quick debugging
-  $scope.couchDbUrl='http://0.0.0.0:5984';
-  $scope.username='admin';
-  $scope.password='';
+  $scope.couchDbUrl = $localStorage.couchDbUrl || '';
+  $scope.username = $localStorage.username || '';
+
+  database.setBaseUrl($scope.couchDbUrl);
 
   $scope.$watch('currentUser', function(newValue) {
     if (newValue) {
@@ -30,6 +30,10 @@ couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', 'database', f
   });
 
   $scope.signIn = function() {
+    $localStorage.couchDbUrl = $scope.couchDbUrl;
+    $localStorage.username = $scope.username;
+
+    database.setBaseUrl($scope.couchDbUrl);
     database.signIn({
       username: $scope.username,
       password: $scope.password

@@ -1,11 +1,15 @@
 /* global couchDbUserManagementApp */
 couchDbUserManagementApp.service('database', ['$http', function ($http) {
   'use strict';
+  var baseUrl;
 
   return {
+    setBaseUrl: function(url) {
+      baseUrl = url.replace(/\/$/, '');
+    },
     checkSession: function() {
       var promise = $http({
-        url: 'http://localhost:5984/_session',
+        url: baseUrl + '/_session',
         withCredentials: true
       });
       return promise.then(function(response){
@@ -20,7 +24,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
     signIn: function(options) {
       var promise = $http({
         method: 'post',
-        url: 'http://localhost:5984/_session',
+        url: baseUrl + '/_session',
         data: {
           name: options.username,
           password: options.password
@@ -39,7 +43,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
     signOut: function() {
       var promise = $http({
         method: 'delete',
-        url: 'http://localhost:5984/_session',
+        url: baseUrl + '/_session',
         withCredentials: true
       });
       return promise.catch(function(response) {
@@ -51,7 +55,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
     },
     getUsers: function () {
       var promise = $http({
-        url: 'http://localhost:5984/_users/_all_docs?include_docs=true&startkey=%22org.couchdb.user:%22&endkey=%22org.couchdb.user:|%22',
+        url: baseUrl + '/_users/_all_docs?include_docs=true&startkey=%22org.couchdb.user:%22&endkey=%22org.couchdb.user:|%22',
         withCredentials: true
       });
       return promise.then(function (response) {
@@ -67,7 +71,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
       var id = 'org.couchdb.user:'+options.username;
       var promise = $http({
         method: 'put',
-        url: 'http://localhost:5984/_users/' + encodeURIComponent(id),
+        url: baseUrl + '/_users/' + encodeURIComponent(id),
         data: {
           _id: id,
           name: options.username,
@@ -87,7 +91,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
 
       return $http({
         method: 'get',
-        url: 'http://localhost:5984/_users/' + encodeURIComponent(id),
+        url: baseUrl + '/_users/' + encodeURIComponent(id),
         withCredentials: true
       }).then(function(response) {
         var userObject = response.data;
@@ -102,7 +106,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
 
         return $http({
           method: 'put',
-          url: 'http://localhost:5984/_users/' + encodeURIComponent(id),
+          url: baseUrl + '/_users/' + encodeURIComponent(id),
           data: userObject,
           withCredentials: true
         });
@@ -118,7 +122,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
 
       return $http({
         method: 'get',
-        url: 'http://localhost:5984/_users/' + encodeURIComponent(id),
+        url: baseUrl + '/_users/' + encodeURIComponent(id),
         withCredentials: true
       }).then(function(response) {
         var userObject = response.data;
@@ -126,7 +130,7 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
         userObject._deleted = true;
         return $http({
           method: 'put',
-          url: 'http://localhost:5984/_users/' + encodeURIComponent(id),
+          url: baseUrl + '/_users/' + encodeURIComponent(id),
           data: userObject,
           withCredentials: true
         });
