@@ -54,6 +54,16 @@ article.active form {
   display: block;
 }
 
+.users article .glyphicon-edit,
+.users article:hover .glyphicon-user,
+.users article.active .glyphicon-user {
+  display: none;
+}
+.users article:hover .glyphicon-edit,
+.users article.active .glyphicon-edit {
+  display: inline;
+}
+
 .signInForm {
   margin-top: -20px;
 }
