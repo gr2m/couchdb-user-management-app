@@ -40,17 +40,17 @@ body > header  .version{
   margin: -3px -4px;
 }
 
-.users article {
+article {
   padding: 8px 15px;
   margin: 0 -15px;
 }
-.users article:nth-child(odd) {
+article:nth-child(odd) {
   background: #f3f3f3;
 }
-.users article form {
+article form {
   display: none;
 }
-.users article.active form {
+article.active form {
   display: block;
 }
 
@@ -62,4 +62,8 @@ body > footer {
   padding: 30px 15px 15px;
   background: #333;
   color: #eee;
+}
+.databases th {
+  width: 1px;
+  white-space: nowrap;
 }

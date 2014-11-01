@@ -148,7 +148,31 @@ couchDbUserManagementApp.service('database', ['$http', '$q', function ($http, $q
       }).then(function() {
         return username;
       });
-    }
+    },
+
+    getDatabases: function () {
+      return $http({
+        method: 'get',
+        url: baseUrl + '/_all_dbs',
+        withCredentials: true
+      }).then(function(response) {
+        var getAllDbSecurityPromises = response.data.filter(function(dbName) {
+          // ignore databases starting with _
+          return dbName[0] !== '_';
+        }).map(function(dbName) {
+          return $http({
+            method: 'get',
+            url: baseUrl + '/'+dbName+'/_security',
+            withCredentials: true
+          }).then(function(response) {
+            var dbSecurity = response.data;
+            dbSecurity.name = dbName;
+            return dbSecurity;
+          });
+        });
+        return $q.all(getAllDbSecurityPromises);
+      });
+    },
   };
 
 }]);

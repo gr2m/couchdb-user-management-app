@@ -64,9 +64,15 @@
     <div class="main container" ng-show="currentUser">
       <div class="ng-hide" ng-show="users">
         <p class="actions">
-          <button class="btn btn-default pull-right" ng-click="signOut()">sign out</button>
+          <button class="btn btn-default pull-right" ng-click="signOut()">
+            <span class="glyphicon glyphicon-off"></span>
+            sign out
+          </button>
 
-          <button class="btn btn-primary" ng-click="showNewUserForm=!showNewUserForm" ng-class="{active : showNewUserForm}">add user</button>
+          <button class="btn btn-primary" ng-click="showNewUserForm=!showNewUserForm" ng-class="{active : showNewUserForm}">
+            <span class="glyphicon glyphicon-plus"></span>
+            add user
+          </button>
         </p>
 
         <div ng-show="showNewUserForm">
@@ -99,10 +105,14 @@
             <input class="form-control" ng-model="query" type="search" placeholder="Filter"/>
           </div>
         </p>
+
+        <h2>Users</h2>
+
         <div class="users">
           <article ng-repeat="user in users | filter:query" ng-class="{active : isOpen(user)}">
             <header ng-click="toggleUser(user)">
               <h4>
+                <span class="glyphicon glyphicon-user"></span>
                 {{user.username}}
               </h4>
               <p>
@@ -134,6 +144,40 @@
                 <button class="btn btn-default" ng-click="toggleUser(user, $event)">Close</button>
               </p>
             </form>
+          </article>
+        </div>
+
+        <h2>Databases</h2>
+
+        <div ng-hide="databases">
+          loading...
+        </div>
+        <div class="databases" ng-show="databases">
+          <article ng-repeat="database in databases | filter:query">
+            <header>
+              <h4>
+                <span class="glyphicon glyphicon-folder-close"></span>
+                {{database.name}}
+              </h4>
+              <table class="table">
+                <tr ng-if="database.admins.names.length">
+                  <th>admins.names</th>
+                  <td>{{database.admins.names.join(', ')}}</td>
+                </tr>
+                <tr ng-if="database.admins.roles.length">
+                  <th>admins.roles</th>
+                  <td>{{database.admins.roles.join(', ')}}</td>
+                </tr>
+                <tr ng-if="database.members.names.length">
+                  <th>members.names</th>
+                  <td>{{database.members.names.join(', ')}}</td>
+                </tr>
+                <tr ng-if="database.members.roles.length">
+                  <th>members.roles</th>
+                  <td>{{database.members.roles.join(', ')}}</td>
+                </tr>
+              </table>
+            </header>
           </article>
         </div>
       </div>

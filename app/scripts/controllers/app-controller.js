@@ -9,10 +9,19 @@ couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', '$localStorag
 
   $scope.$watch('currentUser', function(newValue) {
     if (newValue) {
+      // fetch users
       database.getUsers().then(function(users) {
         $scope.users = users;
       }).catch(function(error) {
         window.alert('could not load users');
+        console.log(error);
+      });
+
+      // fetch databases
+      database.getDatabases().then(function(databases) {
+        $scope.databases = databases;
+      }).catch(function(error) {
+        window.alert('could not load databases');
         console.log(error);
       });
     } else {
