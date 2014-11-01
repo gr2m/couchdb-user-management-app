@@ -1,5 +1,5 @@
 /* global couchDbUserManagementApp */
-couchDbUserManagementApp.service('database', ['$http', function ($http) {
+couchDbUserManagementApp.service('database', ['$http', '$q', function ($http, $q) {
   'use strict';
   var baseUrl;
 
@@ -87,7 +87,8 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
       });
     },
     updateUser: function(username, options) {
-      var id = 'org.couchdb.user:'+options.username;
+      var id = 'org.couchdb.user:'+username;
+      var database = this;
 
       return $http({
         method: 'get',
@@ -100,8 +101,18 @@ couchDbUserManagementApp.service('database', ['$http', function ($http) {
           userObject.password = options.password;
         }
         if (options.username && username !== options.username) {
-          window.alert('Username cannot be changed yet');
-          options.username = username;
+          userObject._id = 'org.couchdb.user:'+ options.username;
+          delete userObject._rev;
+          userObject.name = options.username;
+          return $q.all([
+            $http({
+              method: 'put',
+              url: baseUrl + '/_users/' + encodeURIComponent(userObject._id),
+              data: userObject,
+              withCredentials: true
+            }),
+            database.removeUser(username)
+          ]);
         }
 
         return $http({

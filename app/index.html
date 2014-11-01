@@ -126,7 +126,7 @@
               </div>
               <div class="form-group">
                 <label for="newUser-inputText">Roles</label>
-                <input type="text" class="form-control" id="newUser-inputText" placeholder="Change Roles (comma separated)" ng-init="user.newRoles = user.roles" ng-model="user.newRoles">
+                <input type="text" class="form-control" id="newUser-inputText" placeholder="Change Roles (comma separated)" ng-init="user.newRoles = user.roles.join(', ')" ng-model="user.newRoles">
                 <p class="help-block">Comma-separated list of roles</p>
               </div>
               <p>

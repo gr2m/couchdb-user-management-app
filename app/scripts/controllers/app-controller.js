@@ -61,6 +61,10 @@ couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', '$localStorag
   };
 
   $scope.addUser = function() {
+    if (! $scope.newUserRoles) {
+      $scope.newUserRoles = '';
+    }
+
     database.addUser({
       username: $scope.newUserUsername,
       password: $scope.newUserPassword,
@@ -98,6 +102,8 @@ couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', '$localStorag
   };
 
   $scope.updateUser = function(user) {
+    var isNewUsername = user.newUsername && user.username !== user.newUsername;
+
     database.updateUser(user.username, {
       username: user.newUsername,
       password: user.newPassword,
@@ -110,6 +116,12 @@ couchDbUserManagementApp.controller('AppCtrl', ['$scope', '$http', '$localStorag
         user.roles = updatedProperties.roles.join(', ');
         user.newRoles = user.roles;
         window.alert('user updated');
+        if (isNewUsername) {
+          $scope.users.sort(function(a,b) {
+            return a.username > b.username ? 1 : -1;
+          });
+        }
+        $scope.openUser = null;
       },
       function(error) {
         window.alert('something went wrong: '+ error);
