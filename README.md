@@ -13,10 +13,11 @@ bower install
 grunt serve
 ```
 
-## Requirements on CouchDB
+## Required CouchDB Settings
 
 CORS must be enabled in the CouchDB you try to connect
-to, and the current domain bust be whitelisted.
+to, and the apps' URL must either be listed in `cors.origin`,
+or it must be set to `*` (allows all origins).
 
 <table>
   <thead>
@@ -34,7 +35,7 @@ to, and the current domain bust be whitelisted.
   <tr>
     <td><strong>cors</strong></td>
     <td>origins</td>
-    <td>http://localhost:9000, http://gr2m.github.io, https://gr2m.github.io</td>
+    <td>*</td>
   </tr>
 </table>
 
