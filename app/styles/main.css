@@ -1,0 +1,65 @@
+body{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+body > header {
+  position: relative;
+  z-index: 1;
+  padding: 15px;
+
+  background: #333;
+  color: #fff;
+}
+
+body > header  h3{
+  display: inline;
+}
+
+body > header  .version{
+  color: #CECECE;
+}
+
+.main{
+  min-height: 200px;
+  flex: 1;
+  padding-top: 12px;
+}
+
+.ng-hide * {
+  display:none;
+}
+.ng-hide:after{
+  content: "Loading";
+}
+
+.highlighted {
+  background-color: rgba(255, 255, 100, 0.5);
+  padding: 3px 4px;
+  margin: -3px -4px;
+}
+
+.users article {
+  padding: 8px 15px;
+  margin: 0 -15px;
+}
+.users article:nth-child(odd) {
+  background: #f3f3f3;
+}
+.users article form {
+  display: none;
+}
+.users article.active form {
+  display: block;
+}
+
+.signInForm {
+  margin-top: -20px;
+}
+
+body > footer {
+  padding: 30px 15px 15px;
+  background: #333;
+  color: #eee;
+}
