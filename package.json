@@ -1,6 +1,6 @@
 {
   "name": "couchdb-user-management-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web app to manage CouchDB users and database security settings",
   "homepage": "http://gr2m.github.io/couchdb-user-management-app",
   "devDependencies": {
