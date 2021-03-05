@@ -33,5 +33,6 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "repository": "github:gr2m/couchdb-user-management-app"
 }
